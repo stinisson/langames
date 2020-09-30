@@ -1,7 +1,6 @@
 # langames
 An exercise on finding out what games to play together
 
-# Excercises
+# Exercises
 
 Look for "TODO" in all Python files. Solve them one by one!
-
