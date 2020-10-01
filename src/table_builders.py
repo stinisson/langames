@@ -1,5 +1,6 @@
 from pathlib import Path
 
+
 class HtmlTableBuilder:
     """Produces HTML table code to be inserted into a larger HTML document"""
 
@@ -70,9 +71,8 @@ class CsvTableBuilder:
     def add_row(self, cells):
         self.rows.append(cells)
 
-
     def get_csv_text(self):
-
+        #'Anna,Kalle\n1,2\n3,4'
         text = ""
         text += ",".join(self.headers)
         for row in self.rows:

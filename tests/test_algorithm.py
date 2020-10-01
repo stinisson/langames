@@ -1,40 +1,84 @@
-from src.algorithm import conclusion
+from src.algorithm import conclusion, find_gamers
 from pathlib import Path
 import json
 
 
-# def conclusion(states):
-#     if 'not owned' in states:
-#         return 'RED'
-#     if 'not installed' in states:
-#         return 'YELLOW'
-#     return 'GREEN'
-
-def test_find_conclusion_no_one_owned_game_means_red():
-    assert conclusion(['not owned', 'not installed']) == 'RED'
+def test_find_conclusion_not_owned_game_means_red():
+    assert conclusion(['not owned', 'not installed', 'installed', 'not installed']) == 'RED'
 
 
-def test_find_conclusion_no_one_installed_game_means_yellow():
+def test_find_conclusion_not_owned_game_means_red_last():
+    assert conclusion(['not installed', 'not installed', 'installed', 'not owned']) == 'RED'
+
+
+def test_find_conclusion_empty_list_means_not_red():
+    assert conclusion(['']) != 'RED'
+
+
+def test_find_conclusion_not_installed_game_means_yellow():
     assert conclusion(['owned', 'not installed']) == 'YELLOW'
 
 
+def test_find_conclusion_not_installed_game_means_yellow_several():
+    assert conclusion(['owned', 'not installed', 'not installed', 'owned', 'owned']) == 'YELLOW'
+
+
+def test_find_conclusion_empty_list_means_not_yellow():
+    assert conclusion(['']) != 'YELLOW'
+
+
 def test_find_conclusion_installed_game_means_green():
-    assert conclusion(['owned', 'installed']) == 'GREEN'
+    assert conclusion(['installed', 'installed']) == 'GREEN'
 
 
-# TODO: Add tests for find_gamers. Hint: either load data/gamers.json into the test, or make up some test data here!
-# (do you prefer separate test data file, or hard-coding the test data in the test? Discuss!)
-
-# def find_gamers(data):
-#     return {gamer['name'] for gamer in data['gamers']}
-
-def test_find_first_gamer():
-    data = json.loads(Path('test_gamers.json').read_text(encoding='utf8'))
-    gamer = data['gamers'][0]['name']
-    assert gamer == "Agneta"
+def test_find_conclusion_empty_list_means_green():
+    assert conclusion(['']) == 'GREEN'
 
 
-def test_find_all_gamers():
-    data = json.loads(Path('test_gamers.json').read_text(encoding='utf8'))
-    all_gamers = [gamer['name'] for gamer in data['gamers']]
-    assert all_gamers == ['Agneta', 'Anni-Frid', 'Björn', 'Benny']
+def test_find_gamers_first_gamer_hard_coded_data():
+    data = {
+        "gamers": [
+            {
+                "name": "Agneta",
+                "games": [
+                    {
+                        "game": "Alien Swarm",
+                        "installed": True
+                    },
+                    {
+                        "game": "Quake III: Arena",
+                        "installed": True
+                    },
+                    {
+                        "game": "Wreckfest",
+                        "installed": False
+                    },
+                    {
+                        "game": "Brawlhalla",
+                        "installed": True
+                    }
+                ]
+            }
+        ]
+    }
+    gamers = find_gamers(data)
+    assert "Agneta" in gamers
+
+
+def test_find_gamers_check_if_gamer_in_data_loaded_into_test_from_file():
+    data = json.loads(Path('../data/gamers.json').read_text(encoding='utf8'))
+    all_gamers = find_gamers(data)
+    assert "Agneta" in all_gamers
+
+
+def test_find_gamers_check_that_gamer_not_in_data_loaded_into_test_from_file():
+    data = json.loads(Path('../data/gamers.json').read_text(encoding='utf8'))
+    all_gamers = find_gamers(data)
+    assert "ABBA" not in all_gamers
+
+
+# If gamers never change, otherwise bananas
+def test_find_gamers_all_gamers():
+    data = json.loads(Path('../data/gamers.json').read_text(encoding='utf8'))
+    all_gamers = find_gamers(data)
+    assert all_gamers == {'Agneta', 'Anni-Frid', 'Björn', 'Benny'}
