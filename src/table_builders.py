@@ -1,3 +1,5 @@
+from pathlib import Path
+
 class HtmlTableBuilder:
     """Produces HTML table code to be inserted into a larger HTML document"""
 
@@ -53,20 +55,26 @@ class ConsoleTableBuilder:
         return result + "\n"
 
 
-# TODO: implement this class by filling in the methods
 # Hint 1: look at test in test_tablebuilders.py for expected behaviour!
 # Hint 2: CSV stands for comma-separated-values
 class CsvTableBuilder:
     """Produces an output string with comma separated values to written to file"""
 
     def __init__(self):
-        pass
+        self.rows = []
+        self.headers = ""
 
     def set_headers(self, column_headers):
-        pass
+        self.headers = column_headers
 
     def add_row(self, cells):
-        pass
+        self.rows.append(cells)
+
 
     def get_csv_text(self):
-        pass
+
+        text = ""
+        text += ",".join(self.headers)
+        for row in self.rows:
+            text += '\n' + ",".join(row)
+        return text

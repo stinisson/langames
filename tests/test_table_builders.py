@@ -16,8 +16,9 @@ def test_simple_2x2_text_table():
     builder.set_headers(['Anna', 'Kalle'])
     builder.add_row(['1', '2'])
     builder.add_row(['3', '4'])
-    # TODO: Fill in expected string below!
-    expected = ''
+
+    #expected = "      Anna     Kalle\n         1         2\n         3         4\n"
+    expected = "{name1:>10} {name2:>10} {row11:>9} {row12:>10} {row21:>9} {row22:>10}".format(name1="Anna", name2="Kalle\n", row11="1", row12="2"+'\n', row21="3", row22="4\n")
     got = builder.get_string_output()
     assert expected == got
 
