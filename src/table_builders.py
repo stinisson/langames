@@ -54,7 +54,7 @@ class ConsoleTableBuilder:
 
 
 # TODO: implement this class by filling in the methods
-# Hint 1: look in test_tablebuilders.py for expected behaviour!
+# Hint 1: look at test in test_tablebuilders.py for expected behaviour!
 # Hint 2: CSV stands for comma-separated-values
 class CsvTableBuilder:
     """Produces an output string with comma separated values to written to file"""
