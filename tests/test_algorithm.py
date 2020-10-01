@@ -13,8 +13,10 @@ import json
 def test_find_conclusion_no_one_owned_game_means_red():
     assert conclusion(['not owned', 'not installed']) == 'RED'
 
+
 def test_find_conclusion_no_one_installed_game_means_yellow():
     assert conclusion(['owned', 'not installed']) == 'YELLOW'
+
 
 def test_find_conclusion_installed_game_means_green():
     assert conclusion(['owned', 'installed']) == 'GREEN'
@@ -27,15 +29,12 @@ def test_find_conclusion_installed_game_means_green():
 #     return {gamer['name'] for gamer in data['gamers']}
 
 def test_find_first_gamer():
-
     data = json.loads(Path('test_gamers.json').read_text(encoding='utf8'))
     gamer = data['gamers'][0]['name']
     assert gamer == "Agneta"
 
-# TODO implementera ettt test som hittar alla gamers i filen
-def test_find_all_gamers():
 
+def test_find_all_gamers():
     data = json.loads(Path('test_gamers.json').read_text(encoding='utf8'))
-    gamers = []
-    #all_gamers = {[gamer['name'] for gamer in data['gamers']}
-    #assert gamer == "Agneta"
+    all_gamers = [gamer['name'] for gamer in data['gamers']]
+    assert all_gamers == ['Agneta', 'Anni-Frid', 'Björn', 'Benny']
