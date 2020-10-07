@@ -1,6 +1,7 @@
 from src.algorithm import conclusion, find_gamers
 from pathlib import Path
 import json
+import os
 
 
 # test conclusion()
@@ -84,3 +85,13 @@ def test_find_gamers_find_all_gamers():
     data = json.loads(Path('../data/gamers.json').read_text(encoding='utf8'))
     all_gamers = find_gamers(data)
     assert all_gamers == {'Agneta', 'Anni-Frid', 'Björn', 'Benny'}
+
+
+# from lesson
+def test_find_gamers():
+    print(os.getcwd())
+    expected = []
+    obj = Path("../data/gamers.json").read_text(encoding="utf8")
+
+    actual = find_gamers(obj)
+    assert actual == expected
